@@ -1,0 +1,27 @@
+@(comments: List[Comment], username: String)
+
+@import helper._
+	@mainAdmin("Comments", username){
+        <div class="col-sm-9 col-md-10 main">
+          <h1 class="page-header">Comments</h1>
+	       
+			<table class="table table-striped table-condensed table-responsive" >
+				<tr>
+					<th class="col-xs-2">Author</th>
+					<th class="col-xs-4">Comment</th>
+					<th class="col-xs-2">In Response To</th>
+					<th class="col-xs-1">Posted on</th>
+					<th class="col-xs-1"></th>
+					<th class="col-xs-2"></th>
+				</tr>
+				@for(comment <- comments){
+					<tr>
+						<td><a href="#">Anonymous</a></td>
+						<td><a href="#">@comment.getContent(comment.id)</a></td>
+						<td><a href="@routes.Application.viewPost(comment.post.id)" target="_blank">@comment.post.getSubject(comment.post.id)</a></td>
+						<td>@comment.getDate(comment.id)</td>
+					</tr>
+				}
+			</table>
+        </div>
+}

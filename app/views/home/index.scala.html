@@ -1,0 +1,23 @@
+@(posts: List[Post])
+
+<!DOCTYPE html>
+<body>
+	@main("My Blog"){
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<h3><small>Recent Posts</small></h3>
+				<hr>
+				@for(post <- posts){
+						<h2><a href="@routes.Application.viewPost(post.id)" class="post-header">@post.subject</a></h2>
+						<h5><small><span class="glyphicon glyphicon-time"></span>@post.getDate(post.id) by @post.author()</small></h5>
+							<p>@post.getContent(post.id)</p>
+						<hr>
+				}
+			</div>
+		</div>
+	</div>
+		}
+</body>
+</html>

@@ -1,0 +1,63 @@
+@(post: Post, comment:Form[Comment])
+
+@import helper._ 
+
+<!DOCTYPE html>
+<body>
+	@main(post.subject){
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				@if(flash.containsKey("comment saved")){
+					<div class="alert alert-success">
+			            <strong>Done!</strong> @flash.get("comment saved")
+			        </div>		
+				}
+				
+				<h2><a href="@routes.Application.viewPost(post.id)" class="post-header">@post.subject</a></h2>
+				<h5><small><span class="glyphicon glyphicon-time"></span>@post.getDate(post.id) by @post.author()</small></h5>
+				<p>@post.getContent(post.id)</p>
+				<hr>
+				
+				<!-- comments -->
+				@if(post.comments.size > 0){
+					<h3><span class="badge">@post.comments.size</span> Comments</h3>
+					
+					@for(cmt <- post.comments){
+							<div class="row">
+								<div class="col-sm-2">
+									<img src="@routes.Assets.at("images/bandmember.jpg")" class="img-circle" height="65" width="65" alt="Avatar">
+								</div>
+								<div class="col-sm-10">
+									<h5><small>@cmt.getDate(cmt.id)</small></h5>
+									<p>@cmt.getContent(cmt.id)</p><br>
+								</div>
+							</div>
+					}
+				}
+				
+				
+				<hr>
+				<!-- leave a comment textarea-->
+				<h3>Leave a Comment</h3>
+					<div class="form-horizontal">
+					@form(routes.Application.saveComment(post.id)){
+						<div class="form-group">
+							<textarea name="@comment("content").name" value="@comment("content").value" class="form-control" rows="5" cols="8"></textarea>
+							@if(comment("content").errors.size > 0){
+								@for(error <- comment("content").errors){
+									<span class="err">@Messages(error.message())</span>
+								}
+							}
+						</div>
+							
+						<input type="submit" class="btn btn-primary" value="Post Comment">
+					}
+					</div>
+				
+			</div>
+		</div>
+	</div>
+		}
+</body>
+</html>

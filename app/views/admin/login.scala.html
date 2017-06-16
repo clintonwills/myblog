@@ -1,0 +1,49 @@
+@(loginForm: Form[Admin.Login])
+
+@import helper._
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Admin Login</title>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+    <link rel="stylesheet" href="@routes.Assets.at("bootstrap-3.3.7-dist/css/bootstrap.min.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+    <script src="@routes.Assets.at("ajax/libs/jquery/1.12.0/jquery.min.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("bootstrap/3.3.6/js/bootstrap.min.js")" type="text/javascript"></script>
+</head>
+    
+<body>
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="container well col-md-4 sign-in" style="margin:8% 0;">
+			<h3>Sign in</h3>
+			@if(loginForm.hasErrors()){
+				<p class="err global-err">
+					@loginForm.globalError().message
+				</p>
+			}
+
+			@if(flash.containsKey("not loggedin")){
+				<p class="err">@flash.get("not loggedin")</p>
+			}
+			<div class="form-horisontal">
+					@form(routes.Admin.authenticate){
+						<div class="form-group">
+								    <input type="text" class="form-control" name="username" value="@loginForm("username").value" placeholder="Username*">
+
+						</div>
+						<div class="form-group">
+								    <input type="password" class="form-control" name="password" value="@loginForm("password").value" placeholder="password*">
+
+						</div>
+						<input type="submit" value="Login" class="btn btn-primary btn-block">
+					}
+			</div>
+
+		</div>
+
+	</div>
+</body>
+
+</html>
